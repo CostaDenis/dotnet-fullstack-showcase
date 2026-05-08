@@ -5,7 +5,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
   "mainAssemblyName": "Showcase.Web",
   "applicationEnvironment": "Development",
   "resources": {
-    "hash": "sha256-JirUNqVG6P5dBltFZYEzEU/Np28sUNwVMk+hnKbIjBI=",
+    "hash": "sha256-jwsJUR0OqYTMnfmQZcGgtZU4sPuh/bJYPiQyefqMt4w=",
     "jsModuleNative": [
       {
         "name": "dotnet.native.ykrnppwhq2.js"
@@ -1241,17 +1241,29 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
         "cache": "force-cache"
       },
       {
+        "virtualPath": "Showcase.Core.wasm",
+        "name": "Showcase.Core.j91qrpt7a9.wasm",
+        "integrity": "sha256-Geh4p3xJS0OYO9J6uzabiE+0I1ri/se9eepwcefGgJk=",
+        "cache": "force-cache"
+      },
+      {
         "virtualPath": "Showcase.Web.wasm",
-        "name": "Showcase.Web.k2t2wr28u4.wasm",
-        "integrity": "sha256-VHR8RBzYOiqO9MYpymp/dVFpLHJsY9JR1OJwXWvI0lM=",
+        "name": "Showcase.Web.gpb8lpqhw6.wasm",
+        "integrity": "sha256-RAacnNo3lepXoYjg+QMPPp1b3Jsph85NGKSvSC9t2d8=",
         "cache": "force-cache"
       }
     ],
     "pdb": [
       {
+        "virtualPath": "Showcase.Core.pdb",
+        "name": "Showcase.Core.qk84kw81t6.pdb",
+        "integrity": "sha256-lifsjzA1EHLH1rzuKvOsowXPN4s9GV07JdE+bJYBQXQ=",
+        "cache": "force-cache"
+      },
+      {
         "virtualPath": "Showcase.Web.pdb",
-        "name": "Showcase.Web.2ewmpeq0cz.pdb",
-        "integrity": "sha256-ep61gLxAiAZdD7XmtG0JboBS4YwXFu5zP2NVriL/mIc=",
+        "name": "Showcase.Web.y23zrac9ca.pdb",
+        "integrity": "sha256-Wl0w9sGx7y5dnJL08mF7udrmoMDPVkeLEkIDNTwAiUQ=",
         "cache": "force-cache"
       }
     ],
