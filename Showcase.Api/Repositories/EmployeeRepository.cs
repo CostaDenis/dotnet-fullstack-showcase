@@ -12,7 +12,7 @@ public class EmployeeRepository(AppDbContext Context) : IEmployeeRepository
         => await Context.Employees
             .FirstOrDefaultAsync(x => x.Id == employeeId, cancellationToken);
 
-    public async Task<Employee?> GetByEmailAsync(string email, CancellationToken cancellationToken = default)
+    public async Task<Employee?> ExistsEmailAsync(string email, CancellationToken cancellationToken = default)
         => await Context.Employees
             .FirstOrDefaultAsync(x => x.Email == email, cancellationToken);
 

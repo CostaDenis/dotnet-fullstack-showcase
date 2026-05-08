@@ -16,5 +16,6 @@ app.MapGet("/", () => "Hello World!");
 app.OnConfigureDevEnvironment();
 app.UseMiddleware();
 app.AddSecurity();
+app.MapControllers();
 
 app.Run();

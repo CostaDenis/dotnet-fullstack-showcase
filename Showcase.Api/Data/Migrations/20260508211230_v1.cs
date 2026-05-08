@@ -30,7 +30,9 @@ namespace Showcase.Api.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "varchar", maxLength: 80, nullable: false),
                     email = table.Column<string>(type: "varchar", maxLength: 256, nullable: false),
-                    password_hash = table.Column<string>(type: "varchar", maxLength: 256, nullable: false)
+                    password_hash = table.Column<string>(type: "varchar", maxLength: 256, nullable: false),
+                    password_reset_token_hash = table.Column<string>(type: "varchar", maxLength: 256, nullable: true),
+                    password_reset_token_expiration = table.Column<DateTime>(type: "timestamptz", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -60,6 +62,12 @@ namespace Showcase.Api.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_employees_email",
+                table: "employees",
+                column: "email",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_products_CategoryId",

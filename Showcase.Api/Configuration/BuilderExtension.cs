@@ -3,6 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using Showcase.Api.Data;
+using Showcase.Api.Repositories;
+using Showcase.Api.Repositories.Abstractions;
+using Showcase.Api.Services;
+using Showcase.Api.Services.Abstractions;
 using Showcase.Core;
 
 namespace Showcase.Api.Configuration
@@ -74,6 +78,15 @@ namespace Showcase.Api.Configuration
         public static void AddServices(this WebApplicationBuilder builder)
         {
             builder.Services.AddHttpContextAccessor();
+
+            //repositories
+            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
+            //services
+            builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+
+            //others
+            builder.Services.AddControllers();
         }
 
         public static void AddSecurity(this WebApplicationBuilder builder)

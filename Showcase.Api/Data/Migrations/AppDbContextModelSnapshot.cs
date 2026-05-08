@@ -65,7 +65,19 @@ namespace Showcase.Api.Migrations
                         .HasColumnType("varchar")
                         .HasColumnName("password_hash");
 
+                    b.Property<DateTime?>("PasswordResetTokenExpiration")
+                        .HasColumnType("timestamptz")
+                        .HasColumnName("password_reset_token_expiration");
+
+                    b.Property<string>("PasswordResetTokenHash")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar")
+                        .HasColumnName("password_reset_token_hash");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("employees", (string)null);
                 });

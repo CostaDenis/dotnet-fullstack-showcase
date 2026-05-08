@@ -12,7 +12,7 @@ using Showcase.Api.Data;
 namespace Showcase.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260503234946_v1")]
+    [Migration("20260508211230_v1")]
     partial class v1
     {
         /// <inheritdoc />
@@ -68,7 +68,19 @@ namespace Showcase.Api.Migrations
                         .HasColumnType("varchar")
                         .HasColumnName("password_hash");
 
+                    b.Property<DateTime?>("PasswordResetTokenExpiration")
+                        .HasColumnType("timestamptz")
+                        .HasColumnName("password_reset_token_expiration");
+
+                    b.Property<string>("PasswordResetTokenHash")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar")
+                        .HasColumnName("password_reset_token_hash");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("employees", (string)null);
                 });

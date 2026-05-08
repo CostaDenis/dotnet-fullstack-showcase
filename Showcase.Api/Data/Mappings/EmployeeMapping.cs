@@ -29,10 +29,24 @@ public class EmployeeMapping : IEntityTypeConfiguration<Employee>
             .HasMaxLength(256)
             .IsRequired();
 
+        builder.HasIndex(e => e.Email)
+            .IsUnique();
+
         builder.Property(e => e.PasswordHash)
             .HasColumnName("password_hash")
             .HasColumnType("varchar")
             .HasMaxLength(256)
             .IsRequired();
+
+        builder.Property(e => e.PasswordResetTokenHash)
+            .HasColumnName("password_reset_token_hash")
+            .HasColumnType("varchar")
+            .HasMaxLength(256)
+            .IsRequired(false);
+
+        builder.Property(e => e.PasswordResetTokenExpiration)
+            .HasColumnName("password_reset_token_expiration")
+            .HasColumnType("timestamptz")
+            .IsRequired(false);
     }
 }

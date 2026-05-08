@@ -10,6 +10,8 @@ public class Employee
     public string Name { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public string PasswordHash { get; set; } = string.Empty;
+    public string? PasswordResetTokenHash { get; set; }
+    public DateTime? PasswordResetTokenExpiration { get; set; }
 
     public Employee()
     { }
@@ -20,6 +22,8 @@ public class Employee
         return result == PasswordVerificationResult.Success;
     }
 
-    public string PasswordHasher(string password)
-        => passwordHasher.HashPassword(this, password);
+    public void SetPassword(string password, IPasswordHasher<Employee> passwordHasher)
+    {
+        PasswordHash = passwordHasher.HashPassword(this, password);
+    }
 }
