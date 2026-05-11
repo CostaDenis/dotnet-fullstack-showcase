@@ -82,10 +82,12 @@ namespace Showcase.Api.Configuration
             //repositories
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
             //services
             builder.Services.AddScoped<IEmployeeService, EmployeeService>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
+            builder.Services.AddScoped<IProductService, ProductService>();
 
             //others
             builder.Services.AddControllers();

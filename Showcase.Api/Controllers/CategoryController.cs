@@ -10,8 +10,8 @@ public class CategoryController(ICategoryService CategoryService)
     : ControllerBase
 {
     [HttpGet]
-    [ProducesResponseType(typeof(CategoryResponse), StatusCodes.Status200OK)]
-    public async Task<ActionResult<CategoryResponse>> GetAll(
+    [ProducesResponseType(typeof(List<CategoryResponse>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<List<CategoryResponse>>> GetAll(
         CancellationToken cancellationToken = default
     )
     {

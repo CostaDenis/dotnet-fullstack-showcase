@@ -11,6 +11,11 @@ public class ProductRepository(AppDbContext Context) : IProductRepository
         => await Context.Products
             .ToListAsync(cancellationToken);
 
+    public async Task<List<Product>?> GetByCategoryIdAsync(Guid categoryId, CancellationToken cancellationToken = default)
+    => await Context.Products
+            .Where(x => x.CategoryId == categoryId)
+            .ToListAsync(cancellationToken);
+
     public async Task<Product?> GetByIdAsync(Guid productId, CancellationToken cancellationToken = default)
     => await Context.Products
             .FirstOrDefaultAsync(x => x.Id == productId, cancellationToken);
