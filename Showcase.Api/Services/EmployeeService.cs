@@ -52,13 +52,13 @@ public class EmployeeService(IEmployeeRepository EmployeeRepository) : IEmployee
     public async Task<EmployeeResponse> UpdateAsync(Guid employeeId, EmployeeUpdateRequest request, CancellationToken cancellationToken = default)
     {
         var employee = await EmployeeRepository.GetByIdAsync(employeeId, cancellationToken)
-            ?? throw new EmployeeNotFound();
+            ?? throw new EmployeeNotFoundException();
 
         var existsEmployee = await EmployeeRepository.ExistsEmailAsync(request.Email, cancellationToken);
 
         if (existsEmployee is not null
             && existsEmployee.Id != employee.Id)
-            throw new EmailAlreadyUsed();
+            throw new EmailAlreadyUsedException();
 
         employee.Name = request.Name;
         employee.Email = request.Email;
