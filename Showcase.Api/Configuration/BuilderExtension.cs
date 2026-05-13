@@ -20,8 +20,14 @@ namespace Showcase.Api.Configuration
                 .GetConnectionString("DefaultConnection")
                     ?? throw new InvalidOperationException("Connection String não encontrada!");
 
-            ConfigurationClass.JwtKey = builder.Configuration["JwtKey"]
+            ConfigurationClass.JwtKey = builder.Configuration["Jwt:Key"]
                     ?? throw new InvalidOperationException("Chave Jwt não encontrada!");
+
+            ConfigurationClass.JwtIssuer = builder.Configuration["Jwt:Issuer"]
+                    ?? throw new InvalidOperationException("Issuer não encontrado!");
+
+            ConfigurationClass.JwtAudience = builder.Configuration["Jwt:Audience"]
+                    ?? throw new InvalidOperationException("Audience não encontrado!");
 
             ConfigurationClass.BackendURL = builder.Configuration["BackendURL"]
                     ?? throw new InvalidOperationException("URL do Backend não encontrada!");
@@ -85,9 +91,13 @@ namespace Showcase.Api.Configuration
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
             //services
-            builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+            builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
+            builder.Services.AddScoped<IEmailService, EmailService>();
+            builder.Services.AddScoped<IEmployeeService, EmployeeService>();
             builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddScoped<ITokenService, TokenService>();
+
 
             //others
             builder.Services.AddControllers();

@@ -26,7 +26,7 @@ public class EmployeeService(IEmployeeRepository EmployeeRepository) : IEmployee
 
     public async Task<EmployeeResponse> CreateAsync(EmployeeCreateRequest request, CancellationToken cancellationToken = default)
     {
-        var existsEmployee = await EmployeeRepository.ExistsEmailAsync(request.Email, cancellationToken);
+        var existsEmployee = await EmployeeRepository.GetByEmailAsync(request.Email, cancellationToken);
 
         if (existsEmployee is not null)
             throw new Exception("Email já registrado!");
@@ -54,7 +54,7 @@ public class EmployeeService(IEmployeeRepository EmployeeRepository) : IEmployee
         var employee = await EmployeeRepository.GetByIdAsync(employeeId, cancellationToken)
             ?? throw new EmployeeNotFoundException();
 
-        var existsEmployee = await EmployeeRepository.ExistsEmailAsync(request.Email, cancellationToken);
+        var existsEmployee = await EmployeeRepository.GetByEmailAsync(request.Email, cancellationToken);
 
         if (existsEmployee is not null
             && existsEmployee.Id != employee.Id)

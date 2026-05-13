@@ -5,7 +5,8 @@ namespace Showcase.Api.Repositories.Abstractions;
 public interface IEmployeeRepository
 {
     Task<Employee?> GetByIdAsync(Guid employeeId, CancellationToken cancellationToken = default);
-    Task<Employee?> ExistsEmailAsync(string email, CancellationToken cancellationToken = default);
+    Task<Employee?> GetByEmailAsync(string email, CancellationToken cancellationToken = default);
+    Task<Employee?> GetByPasswordTokenHashAsync(string tokenHash, CancellationToken cancellationToken = default);
     Task<Employee> CreateAsync(Employee employee, CancellationToken cancellationToken = default);
     Task<Employee> UpdateAsync(Employee employee, CancellationToken cancellationToken = default);
 }
