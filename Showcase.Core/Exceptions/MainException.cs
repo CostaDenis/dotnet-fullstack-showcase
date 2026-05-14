@@ -1,3 +1,3 @@
-namespace Showcase.Api.Exceptions;
+namespace Showcase.Core.Exceptions;
 
 public class MainException(string errorMessage) : Exception(errorMessage);

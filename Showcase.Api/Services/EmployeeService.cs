@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Identity;
-using Showcase.Api.Exceptions.EmployeeExceptions;
 using Showcase.Api.Models;
 using Showcase.Api.Repositories.Abstractions;
 using Showcase.Api.Services.Abstractions;
 using Showcase.Core.DTOs.Employee;
+using Showcase.Core.Exceptions.EmployeeExceptions;
 
 namespace Showcase.Api.Services;
 

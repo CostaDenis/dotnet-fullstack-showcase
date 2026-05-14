@@ -1,15 +1,53 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Showcase.Api.Services.Abstractions;
 using Showcase.Core;
+using Showcase.Core.DTOs.Auth;
 
 namespace Showcase.Api.Services;
 
 public class TokenService : ITokenService
 {
+
+    public VerifyAuthTokenResponse VerifyAuthToken(string token)
+    {
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var key = ConfigurationClass.JwtKey;
+        var securityKey = Encoding.UTF8.GetBytes(key);
+
+        var validationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = ConfigurationClass.JwtIssuer,
+            ValidAudience = ConfigurationClass.JwtAudience,
+            IssuerSigningKey = new SymmetricSecurityKey(securityKey),
+            ClockSkew = TimeSpan.Zero
+        };
+
+        try
+        {
+            tokenHandler.ValidateToken(token, validationParameters, out _);
+            return new VerifyAuthTokenResponse
+            {
+                IsValid = true
+            };
+        }
+        catch
+        {
+            return new VerifyAuthTokenResponse
+            {
+                IsValid = false
+            };
+        }
+    }
+
     public string HashToken(string token)
     {
         using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(ConfigurationClass.JwtKey));
@@ -50,32 +88,4 @@ public class TokenService : ITokenService
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
-    public bool VerifyAuthToken(string token)
-    {
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var key = ConfigurationClass.JwtKey;
-        var securityKey = Encoding.UTF8.GetBytes(key);
-
-        var validationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = ConfigurationClass.JwtIssuer,
-            ValidAudience = ConfigurationClass.JwtAudience,
-            IssuerSigningKey = new SymmetricSecurityKey(securityKey),
-            ClockSkew = TimeSpan.Zero
-        };
-
-        try
-        {
-            tokenHandler.ValidateToken(token, validationParameters, out _);
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
-    }
 }

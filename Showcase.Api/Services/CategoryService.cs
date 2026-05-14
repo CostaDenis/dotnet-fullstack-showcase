@@ -1,8 +1,8 @@
-using Showcase.Api.Exceptions.CategoryExceptions;
 using Showcase.Api.Models;
 using Showcase.Api.Repositories.Abstractions;
 using Showcase.Api.Services.Abstractions;
 using Showcase.Core.DTOs.Category;
+using Showcase.Core.Exceptions.CategoryExceptions;
 
 namespace Showcase.Api.Services;
 

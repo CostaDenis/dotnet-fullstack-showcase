@@ -1,4 +1,4 @@
-using Showcase.Api.Exceptions;
+using Showcase.Core.Exceptions;
 
 namespace Showcase.Api.Middlewares;
 

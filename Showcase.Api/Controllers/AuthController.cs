@@ -14,9 +14,9 @@ public class AuthController(
 {
 
     [HttpGet("password-reset")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(VerifyResetTokenResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult> VerifyResetPasswordToken(
+    public async Task<ActionResult<VerifyResetTokenResponse>> ValidatePasswordResetToken(
         [FromQuery] string token,
         CancellationToken cancellationToken = default
     )
@@ -24,46 +24,46 @@ public class AuthController(
         if (string.IsNullOrWhiteSpace(token))
             return NotFound();
 
-        var isValid = await AuthService
+        var result = await AuthService
             .ValidatePasswordResetTokenAsync(token, cancellationToken);
 
-        return Ok();
+        return Ok(result);
     }
 
     [HttpGet("verify-auth-token")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(VerifyAuthTokenResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public ActionResult<bool> VerifyAuthToken(
+    public ActionResult<ActionResult<VerifyAuthTokenResponse>> VerifyAuthToken(
         [FromQuery] string token
         )
     {
         var result = TokenService.VerifyAuthToken(token);
 
-        if (result)
+        if (result.IsValid)
             return Ok(result);
 
         return Unauthorized(result);
     }
 
     [HttpPost("password-reset/confirm")]
-    [ProducesResponseType(typeof(ResetPasswordResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ConfirmPasswordTokenResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<ResetPasswordResponse>> ResetPasswordAsync(
+    public async Task<ActionResult<ConfirmPasswordTokenResponse>> ConfirmPasswordToken(
         [FromQuery] string token,
         [FromBody] VerifyPasswordRequest request,
         CancellationToken cancellationToken = default
     )
     {
         if (string.IsNullOrWhiteSpace(token))
-            return BadRequest(new ResetPasswordResponse { Result = false });
+            return BadRequest(new ConfirmPasswordTokenResponse { IsValid = false });
 
-        var success = await AuthService
+        var result = await AuthService
             .ConfirmPasswordTokenAsync(token, request, cancellationToken);
 
-        if (!success)
-            return BadRequest(new ResetPasswordResponse { Result = false });
+        if (!result.IsValid)
+            return BadRequest(new ConfirmPasswordTokenResponse { IsValid = false });
 
-        return Ok(new ResetPasswordResponse { Result = true });
+        return Ok(new ConfirmPasswordTokenResponse { IsValid = true });
     }
 
     [HttpPost("login")]
@@ -85,7 +85,7 @@ public class AuthController(
     [HttpPost("forgot-password")]
     [ProducesResponseType(typeof(ForgotPasswordResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<ForgotPasswordResponse>> ForgotPassword(
+    public async Task<ActionResult<ForgotPasswordResponse>> GeneratePasswordResetToken(
         [FromBody] EmailRequest request,
         CancellationToken cancellationToken = default
     )
@@ -98,12 +98,9 @@ public class AuthController(
 
         //Mock email
         await EmailService
-            .SendPasswordResetTokenAsync(request.Email, result, cancellationToken);
+            .SendPasswordResetTokenAsync(request.Email, result.Token, cancellationToken);
 
-        return Ok(new ForgotPasswordResponse
-        {
-            Token = result
-        });
+        return Ok(result);
 
     }
 }
