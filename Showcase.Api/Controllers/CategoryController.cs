@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Showcase.Api.Services.Abstractions;
 using Showcase.Core.DTOs.Category;
@@ -5,6 +6,7 @@ using Showcase.Core.DTOs.Category;
 namespace Showcase.Api.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("categories")]
 public class CategoryController(ICategoryService CategoryService)
     : ControllerBase

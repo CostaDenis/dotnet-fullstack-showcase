@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Showcase.Api.Services.Abstractions;
 using Showcase.Core.DTOs.Employee;
@@ -5,6 +6,7 @@ using Showcase.Core.DTOs.Employee;
 namespace Showcase.Api.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("employees")]
 public class EmployeeController(IEmployeeService EmployeeService)
     : ControllerBase

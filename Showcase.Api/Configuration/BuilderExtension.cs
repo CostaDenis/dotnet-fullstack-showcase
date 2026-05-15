@@ -46,7 +46,7 @@ namespace Showcase.Api.Configuration
         {
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("wasm", policy =>
+                options.AddPolicy("showcase", policy =>
                 {
                     policy
                         .WithOrigins(

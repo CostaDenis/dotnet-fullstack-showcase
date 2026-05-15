@@ -1,0 +1,36 @@
+@if (_isVisible)
+{
+    <div class="fixed z-50 top-6 left-6 animate-fade-in">
+
+        <div class="@_color text-foreground px-6 py-3 rounded-xl shadow-lg flex items-center gap-3">
+
+            <img class="w-12 h-12" src="@_iconSrc" />
+            <span>
+                @Message
+            </span>
+
+        </div>
+    </div>
+}
+
+@code {
+    public string Message { get; set; } = string.Empty;
+    private string _color = string.Empty;
+    private string _iconSrc = string.Empty;
+    private bool _isVisible;
+
+    public async Task ShowToastAsync(string message, bool result)
+    {
+        this.Message = message;
+        this._color = result ? "bg-correct" : "bg-wrong";
+        this._iconSrc = result ? "imgs/result/correct.svg" : "imgs/result/wrong.svg";
+
+        _isVisible = true;
+        StateHasChanged();
+
+        await Task.Delay(3000);
+
+        _isVisible = false;
+        StateHasChanged();
+    }
+}

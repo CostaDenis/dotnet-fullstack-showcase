@@ -7,7 +7,7 @@ public class EmailService : IEmailService
 {
     public async Task SendPasswordResetTokenAsync(string to, string token, CancellationToken cancellationToken = default)
     {
-        var url = $"{ConfigurationClass.FrontEndURL}password-reset?token={Uri.EscapeDataString(token)}";
+        var url = $"{ConfigurationClass.FrontEndURL}/password-reset?token={Uri.EscapeDataString(token)}";
         var subject = "Redefinir senha - Showcase";
         var body = $@"
         <h2>Redefinir senha - Showcase</h2>

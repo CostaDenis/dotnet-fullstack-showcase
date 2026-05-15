@@ -1,0 +1,8 @@
+<button type="submit"
+        class="py-3 mt-2 font-medium text-white transition-all duration-200 shadow-lg bg-primary hover:bg-primary/80 hover:cursor-pointer rounded-xl shadow-primary/20">
+    @Text
+</button>
+
+@code {
+    [Parameter] public string Text { get; set; } = string.Empty;
+}

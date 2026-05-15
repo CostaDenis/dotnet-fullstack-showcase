@@ -8,4 +8,22 @@
     --color-secondary: #22D3EE;
     --color-foreground: #E5E7EB;
     --color-muted: #94A3B8;
+    --color-correct: #38a169;
+    --color-wrong: #e53e3e;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fade-in 0.3s ease-out;
 }

@@ -1,0 +1,9 @@
+@using System.Security.AccessControl
+<label for="@For" class="text-sm font-medium text-foreground">
+    @Text
+</label>
+
+@code {
+    [Parameter] public string Text { get; set; } = string.Empty;
+    [Parameter] public string For { get; set; } = string.Empty;
+}
